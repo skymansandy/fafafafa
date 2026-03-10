@@ -26,6 +26,7 @@ internal class BuildSoundSettings : Configurable {
     private var successSoundFileField: TextFieldWithBrowseButton? = null
 
     private var volumeSlider: JSlider? = null
+    private var focusOnFailureCheckBox: JBCheckBox? = null
 
     override fun getDisplayName(): String = "FaFaFaFa"
 
@@ -102,6 +103,8 @@ internal class BuildSoundSettings : Configurable {
             paintLabels = true
         }
 
+        focusOnFailureCheckBox = JBCheckBox("Focus IDE window on build failure")
+
         return FormBuilder.createFormBuilder()
             .addComponent(TitledSeparator("Build Failure Sound"))
             .addComponent(failureEnabledCheckBox!!, JBUI.scale(4))
@@ -115,35 +118,40 @@ internal class BuildSoundSettings : Configurable {
             .addComponent(successButtonPanel)
             .addSeparator(JBUI.scale(8))
             .addLabeledComponent(JBLabel("Volume:"), volumeSlider!!)
+            .addComponent(TitledSeparator("Behavior"), JBUI.scale(8))
+            .addComponent(focusOnFailureCheckBox!!, JBUI.scale(4))
             .addComponentFillVertically(JPanel(), 0)
             .panel
     }
 
     override fun isModified(): Boolean {
-        val settings = BuildSoundSettings.Companion.getInstance().state
+        val settings = BuildSoundSettings.getInstance().state
         return failureEnabledCheckBox?.isSelected != settings.enabled
                 || failureSoundFileField?.text != settings.customSoundPath
                 || successEnabledCheckBox?.isSelected != settings.successEnabled
                 || successSoundFileField?.text != settings.successCustomSoundPath
                 || volumeSlider?.value != settings.volume
+                || focusOnFailureCheckBox?.isSelected != settings.focusOnFailure
     }
 
     override fun apply() {
-        val settings = BuildSoundSettings.Companion.getInstance().state
+        val settings = BuildSoundSettings.getInstance().state
         settings.enabled = failureEnabledCheckBox?.isSelected ?: true
         settings.customSoundPath = failureSoundFileField?.text ?: ""
         settings.successEnabled = successEnabledCheckBox?.isSelected ?: true
         settings.successCustomSoundPath = successSoundFileField?.text ?: ""
         settings.volume = volumeSlider?.value ?: 100
+        settings.focusOnFailure = focusOnFailureCheckBox?.isSelected ?: false
     }
 
     override fun reset() {
-        val settings = BuildSoundSettings.Companion.getInstance().state
+        val settings = BuildSoundSettings.getInstance().state
         failureEnabledCheckBox?.isSelected = settings.enabled
         failureSoundFileField?.text = settings.customSoundPath
         successEnabledCheckBox?.isSelected = settings.successEnabled
         successSoundFileField?.text = settings.successCustomSoundPath
         volumeSlider?.value = settings.volume
+        focusOnFailureCheckBox?.isSelected = settings.focusOnFailure
     }
 
     override fun disposeUIResources() {
@@ -152,5 +160,6 @@ internal class BuildSoundSettings : Configurable {
         successEnabledCheckBox = null
         successSoundFileField = null
         volumeSlider = null
+        focusOnFailureCheckBox = null
     }
 }

@@ -15,7 +15,8 @@ class BuildSoundSettings : PersistentStateComponent<BuildSoundSettings.State> {
         var customSoundPath: String = "",
         var volume: Int = 100,
         var successEnabled: Boolean = true,
-        var successCustomSoundPath: String = ""
+        var successCustomSoundPath: String = "",
+        var focusOnFailure: Boolean = false
     )
 
     private var myState = State()

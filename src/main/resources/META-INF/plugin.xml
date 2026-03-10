@@ -27,6 +27,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.0.1</h3>
+    <ul>
+        <li>Option to automatically focus the IDE window when a build fails</li>
+        <li>Minor improvements and fixes</li>
+    </ul>
+
     <h3>1.0.0</h3>
     <ul>
         <li>Initial release</li>
