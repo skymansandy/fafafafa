@@ -27,18 +27,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    <h3>1.0.1</h3>
-    <ul>
-        <li>Option to automatically focus the IDE window when a build fails</li>
-        <li>Minor improvements and fixes</li>
-    </ul>
-
-    <h3>1.0.0</h3>
     <ul>
         <li>Initial release</li>
         <li>Build failure sound notification</li>
         <li>Configurable custom sound file</li>
         <li>Support for internal compiler and external build systems</li>
+        <li>Option to automatically focus the IDE window when a build fails/succeeds</li>
     </ul>
     ]]></change-notes>
 
@@ -47,17 +41,12 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable
                 parentId="tools"
-                instance="com.fafafafa.buildsound.settings.BuildSoundSettings"
-                id="com.fafafafa.buildsound.settings.BuildSoundSettings"
+                instance="com.fafafafa.buildsound.settings.BuildSoundConfigurable"
+                id="com.fafafafa.buildsound.settings.BuildSoundConfigurable"
                 displayName="FaFaFaFa"/>
         <applicationService
-                serviceImplementation="com.fafafafa.buildsound.BuildSoundSettings"/>
+                serviceImplementation="com.fafafafa.buildsound.settings.BuildSoundSettings"/>
         <postStartupActivity
                 implementation="com.fafafafa.buildsound.listener.BuildSoundStartupActivity"/>
     </extensions>
-
-    <projectListeners>
-        <listener class="com.fafafafa.buildsound.listener.BuildFailureSoundPlayer"
-                  topic="com.intellij.task.ProjectTaskListener"/>
-    </projectListeners>
 </idea-plugin>

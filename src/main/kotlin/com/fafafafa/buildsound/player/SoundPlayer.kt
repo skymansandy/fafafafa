@@ -1,6 +1,6 @@
 package com.fafafafa.buildsound.player
 
-import com.fafafafa.buildsound.BuildSoundSettings
+import com.fafafafa.buildsound.settings.BuildSoundSettings
 import com.intellij.openapi.diagnostic.Logger
 import java.io.BufferedInputStream
 import java.io.File
