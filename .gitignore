@@ -9,4 +9,7 @@ out/
 .gradle
 .idea
 .intellijPlatform
-.kotlin
+.kotlinprivate.pem
+chain.crt
+private.pem
+marketplace-zip-signer-cli.jar
