@@ -1,0 +1,57 @@
+<idea-plugin>
+    <id>dev.skymansandy.fafafafa</id>
+    <name>FaFaFaFa - Build Failure Sound</name>
+    <vendor email="iamsandythedev@gmail.com" url="https://github.com/skymansandy">skymansandy</vendor>
+
+    <description><![CDATA[
+    <h2>FaFaFaFa – Build Failure Sound Alert</h2>
+    <p>
+    Stop staring at your build like a microwave. FaFaFaFa plays a sound when your build fails,
+    so you’ll know instantly when things go wrong.
+    </p>
+
+    <h3>Features</h3>
+    <ul>
+        <li>Plays a sound when a build fails</li>
+        <li>Works with IntelliJ IDEs</li>
+        <li>Use any WAV file (dramatic fail sound recommended xD)</li>
+        <li>Toggle on/off from Settings</li>
+        <li>Adjust volume</li>
+    </ul>
+
+    <h3>Usage</h3>
+    <p>
+    Install it, run a build, and go do something else. If the build fails, FaFaFaFa will let you know.
+    Settings are under <b>Settings → Tools → FaFaFaFa</b>.
+    </p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <h3>1.0.0</h3>
+    <ul>
+        <li>Initial release</li>
+        <li>Build failure sound notification</li>
+        <li>Configurable custom sound file</li>
+        <li>Support for internal compiler and external build systems</li>
+    </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.fafafafa.buildsound.settings.BuildSoundSettings"
+                id="com.fafafafa.buildsound.settings.BuildSoundSettings"
+                displayName="FaFaFaFa"/>
+        <applicationService
+                serviceImplementation="com.fafafafa.buildsound.BuildSoundSettings"/>
+        <postStartupActivity
+                implementation="com.fafafafa.buildsound.listener.BuildSoundStartupActivity"/>
+    </extensions>
+
+    <projectListeners>
+        <listener class="com.fafafafa.buildsound.listener.BuildFailureSoundPlayer"
+                  topic="com.intellij.task.ProjectTaskListener"/>
+    </projectListeners>
+</idea-plugin>
