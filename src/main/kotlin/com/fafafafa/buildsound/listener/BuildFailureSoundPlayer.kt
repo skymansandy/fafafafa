@@ -11,8 +11,11 @@ internal class BuildFailureSoundPlayer : ProjectTaskListener {
 
     override fun finished(result: ProjectTaskManager.Result) {
         if (result.hasErrors() || result.isAborted) {
-            LOG.info("Build failed — playing FaFaFaFa sound")
+            LOG.info("Build failed — playing FaFaFaFa failure sound")
             SoundPlayer.playFailureSound()
+        } else {
+            LOG.info("Build succeeded — playing FaFaFaFa success sound")
+            SoundPlayer.playSuccessSound()
         }
     }
 }

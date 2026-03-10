@@ -16,9 +16,14 @@ internal class BuildSoundStartupActivity : ProjectActivity {
         LOG.info("FaFaFaFa: Registering build listener for project ${project.name}")
         val buildViewManager = project.getService(BuildViewManager::class.java) ?: return
         buildViewManager.addListener({ buildId, event ->
-            if (event is FinishBuildEvent && event.result is FailureResultImpl) {
-                LOG.info("Build finished with failure — playing FaFaFaFa sound")
-                SoundPlayer.playFailureSound()
+            if (event is FinishBuildEvent) {
+                if (event.result is FailureResultImpl) {
+                    LOG.info("Build finished with failure — playing FaFaFaFa failure sound")
+                    SoundPlayer.playFailureSound()
+                } else {
+                    LOG.info("Build finished successfully — playing FaFaFaFa success sound")
+                    SoundPlayer.playSuccessSound()
+                }
             }
         }, project)
     }

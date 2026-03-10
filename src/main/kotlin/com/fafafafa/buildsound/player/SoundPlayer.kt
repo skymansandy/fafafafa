@@ -19,23 +19,30 @@ internal object SoundPlayer {
         val settings = BuildSoundSettings.getInstance().state
         if (!settings.enabled) return
 
-        playSound(settings.customSoundPath, settings.volume)
+        playSound(customSoundPath = settings.customSoundPath, volume = settings.volume, defaultResource = "/sounds/fahhh.wav")
     }
 
-    fun playSound(customSoundPath: String, volume: Int) {
+    fun playSuccessSound() {
+        val settings = BuildSoundSettings.getInstance().state
+        if (!settings.successEnabled) return
+
+        playSound(customSoundPath = settings.successCustomSoundPath, volume = settings.volume, defaultResource = "/sounds/drumroll.wav")
+    }
+
+    fun playSound(customSoundPath: String, volume: Int, defaultResource: String = "/sounds/fahhh.wav") {
         Thread({
             try {
-                val errorAudio = getAudioStream(customSoundPath)
-                if (errorAudio != null) {
-                    playStream(errorAudio, volume)
+                val audio = getAudioStream(customSoundPath, defaultResource)
+                if (audio != null) {
+                    playStream(audio, volume)
                 }
             } catch (e: Exception) {
-                LOG.warn("Failed to play build failure sound", e)
+                LOG.warn("Failed to play sound", e)
             }
         }, "FaFaFaFa-SoundPlayer").start()
     }
 
-    private fun getAudioStream(customPath: String): AudioInputStream? {
+    private fun getAudioStream(customPath: String, defaultResource: String): AudioInputStream? {
         // Try custom sound file first
         if (customPath.isNotBlank()) {
             val file = File(customPath)
@@ -50,7 +57,7 @@ internal object SoundPlayer {
         }
 
         // Try bundled sound
-        val resource = SoundPlayer::class.java.getResourceAsStream("/sounds/fahhh.wav")
+        val resource = SoundPlayer::class.java.getResourceAsStream(defaultResource)
         if (resource != null) {
             return try {
                 AudioSystem.getAudioInputStream(BufferedInputStream(resource))
