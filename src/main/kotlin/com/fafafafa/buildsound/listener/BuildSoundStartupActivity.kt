@@ -1,7 +1,7 @@
 package com.fafafafa.buildsound.listener
 
-import com.fafafafa.buildsound.settings.BuildSoundSettings
 import com.fafafafa.buildsound.player.SoundPlayer
+import com.fafafafa.buildsound.settings.BuildSoundSettings
 import com.intellij.build.BuildViewManager
 import com.intellij.build.events.FailureResult
 import com.intellij.build.events.FinishBuildEvent

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>LongMethod:BuildSoundConfigurable.kt$BuildSoundConfigurable$override fun createComponent(): JComponent</ID>
+    <ID>VariableNaming:BuildSoundStartupActivity.kt$BuildSoundStartupActivity$private val LOG = Logger.getInstance(BuildSoundStartupActivity::class.java)</ID>
+  </CurrentIssues>
+</SmellBaseline>

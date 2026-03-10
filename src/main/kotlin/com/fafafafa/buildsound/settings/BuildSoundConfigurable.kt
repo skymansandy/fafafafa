@@ -1,6 +1,5 @@
 package com.fafafafa.buildsound.settings
 
-import com.fafafafa.buildsound.settings.BuildSoundSettings
 import com.fafafafa.buildsound.player.SoundPlayer
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.options.Configurable
@@ -32,30 +31,35 @@ internal class BuildSoundConfigurable : Configurable {
     override fun getDisplayName(): String = "FaFaFaFa"
 
     override fun createComponent(): JComponent {
-
         failureEnabledCheckBox = JBCheckBox("Enable build failure sound")
 
         failureSoundFileField = TextFieldWithBrowseButton().apply {
-            addBrowseFolderListener(TextBrowseFolderListener(
-                FileChooserDescriptorFactory.createSingleFileDescriptor("wav")
-                    .withTitle("Select Sound File")
-                    .withDescription("Choose a .WAV file to play on build failures"),
-            ))
+            addBrowseFolderListener(
+                TextBrowseFolderListener(
+                    FileChooserDescriptorFactory.createSingleFileDescriptor("wav")
+                        .withTitle("Select Sound File")
+                        .withDescription("Choose a .WAV file to play on build failures"),
+                ),
+            )
         }
 
         val failureButtonPanel = JPanel(FlowLayout(FlowLayout.TRAILING, 0, 0)).apply {
-            add(JButton("Test Sound").apply {
-                addActionListener {
-                    SoundPlayer.playSound(
-                        customSoundPath = failureSoundFileField?.text ?: "",
-                        volume = volumeSlider?.value ?: 100,
-                        defaultResource = "/sounds/fahhh.wav"
-                    )
-                }
-            })
-            add(JButton("Reset to Default").apply {
-                addActionListener { failureSoundFileField?.text = "" }
-            })
+            add(
+                JButton("Test Sound").apply {
+                    addActionListener {
+                        SoundPlayer.playSound(
+                            customSoundPath = failureSoundFileField?.text ?: "",
+                            volume = volumeSlider?.value ?: 100,
+                            defaultResource = "/sounds/fahhh.wav",
+                        )
+                    }
+                },
+            )
+            add(
+                JButton("Reset to Default").apply {
+                    addActionListener { failureSoundFileField?.text = "" }
+                },
+            )
         }
 
         focusOnFailureCheckBox = JBCheckBox("Focus IDE window on build failure")
@@ -63,26 +67,32 @@ internal class BuildSoundConfigurable : Configurable {
         successEnabledCheckBox = JBCheckBox("Enable build success sound")
 
         successSoundFileField = TextFieldWithBrowseButton().apply {
-            addBrowseFolderListener(TextBrowseFolderListener(
-                FileChooserDescriptorFactory.createSingleFileDescriptor("wav")
-                    .withTitle("Select Sound File")
-                    .withDescription("Choose a .WAV file to play on build success"),
-            ))
+            addBrowseFolderListener(
+                TextBrowseFolderListener(
+                    FileChooserDescriptorFactory.createSingleFileDescriptor("wav")
+                        .withTitle("Select Sound File")
+                        .withDescription("Choose a .WAV file to play on build success"),
+                ),
+            )
         }
 
         val successButtonPanel = JPanel(FlowLayout(FlowLayout.TRAILING, 0, 0)).apply {
-            add(JButton("Test Sound").apply {
-                addActionListener {
-                    SoundPlayer.playSound(
-                        customSoundPath = successSoundFileField?.text ?: "",
-                        volume = volumeSlider?.value ?: 100,
-                        defaultResource = "/sounds/drumroll.wav"
-                    )
-                }
-            })
-            add(JButton("Reset to Default").apply {
-                addActionListener { successSoundFileField?.text = "" }
-            })
+            add(
+                JButton("Test Sound").apply {
+                    addActionListener {
+                        SoundPlayer.playSound(
+                            customSoundPath = successSoundFileField?.text ?: "",
+                            volume = volumeSlider?.value ?: 100,
+                            defaultResource = "/sounds/drumroll.wav",
+                        )
+                    }
+                },
+            )
+            add(
+                JButton("Reset to Default").apply {
+                    addActionListener { successSoundFileField?.text = "" }
+                },
+            )
         }
 
         focusOnSuccessCheckBox = JBCheckBox("Focus IDE window on build success")
@@ -115,13 +125,13 @@ internal class BuildSoundConfigurable : Configurable {
 
     override fun isModified(): Boolean {
         val settings = BuildSoundSettings.getInstance().state
-        return failureEnabledCheckBox?.isSelected != settings.enabled
-                || failureSoundFileField?.text != settings.customSoundPath
-                || focusOnFailureCheckBox?.isSelected != settings.focusOnFailure
-                || successEnabledCheckBox?.isSelected != settings.successEnabled
-                || successSoundFileField?.text != settings.successCustomSoundPath
-                || focusOnSuccessCheckBox?.isSelected != settings.focusOnSuccess
-                || volumeSlider?.value != settings.volume
+        return failureEnabledCheckBox?.isSelected != settings.enabled ||
+            failureSoundFileField?.text != settings.customSoundPath ||
+            focusOnFailureCheckBox?.isSelected != settings.focusOnFailure ||
+            successEnabledCheckBox?.isSelected != settings.successEnabled ||
+            successSoundFileField?.text != settings.successCustomSoundPath ||
+            focusOnSuccessCheckBox?.isSelected != settings.focusOnSuccess ||
+            volumeSlider?.value != settings.volume
     }
 
     override fun apply() {
