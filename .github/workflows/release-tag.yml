@@ -1,0 +1,48 @@
+name: Release Tag
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Read plugin version
+        id: version
+        run: |
+          VERSION=$(grep '^pluginVersion=' gradle.properties | cut -d'=' -f2)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Write signing files
+        run: |
+          echo "${{ secrets.SIGNING_CERTIFICATE_CHAIN }}" > chain.crt
+          echo "${{ secrets.SIGNING_PRIVATE_KEY }}" > private.pem
+
+      - name: Build and sign plugin
+        run: ./gradlew signPlugin
+
+      - name: Find signed artifact
+        id: artifact
+        run: |
+          ZIP=$(find build/distributions -name '*-signed.zip' | head -1)
+          echo "path=$ZIP" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          files: ${{ steps.artifact.outputs.path }}
+          fail_on_unmatched_files: true
