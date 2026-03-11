@@ -1,6 +1,6 @@
 package com.fafafafa.buildsound.player
 
-import com.fafafafa.buildsound.BuildSoundSettings
+import com.fafafafa.buildsound.settings.BuildSoundSettings
 import com.intellij.openapi.diagnostic.Logger
 import java.io.BufferedInputStream
 import java.io.File
@@ -19,14 +19,22 @@ internal object SoundPlayer {
         val settings = BuildSoundSettings.getInstance().state
         if (!settings.enabled) return
 
-        playSound(customSoundPath = settings.customSoundPath, volume = settings.volume, defaultResource = "/sounds/fahhh.wav")
+        playSound(
+            customSoundPath = settings.customSoundPath,
+            volume = settings.volume,
+            defaultResource = "/sounds/fahhh.wav",
+        )
     }
 
     fun playSuccessSound() {
         val settings = BuildSoundSettings.getInstance().state
         if (!settings.successEnabled) return
 
-        playSound(customSoundPath = settings.successCustomSoundPath, volume = settings.volume, defaultResource = "/sounds/drumroll.wav")
+        playSound(
+            customSoundPath = settings.successCustomSoundPath,
+            volume = settings.volume,
+            defaultResource = "/sounds/drumroll.wav",
+        )
     }
 
     fun playSound(customSoundPath: String, volume: Int, defaultResource: String = "/sounds/fahhh.wav") {
