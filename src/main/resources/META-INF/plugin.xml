@@ -28,11 +28,21 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>Initial release</li>
-        <li>Build failure sound notification</li>
-        <li>Configurable custom sound file</li>
-        <li>Support for internal compiler and external build systems</li>
-        <li>Option to automatically focus the IDE window when a build fails/succeeds</li>
+        <li><b>1.0.1</b>
+            <ul>
+                <li>Bug fixes and stability improvements</li>
+            </ul>
+        </li>
+
+        <li><b>1.0.0</b>
+            <ul>
+                <li>Initial release</li>
+                <li>Build failure sound notification</li>
+                <li>Configurable custom sound file</li>
+                <li>Support for internal compiler and external build systems</li>
+                <li>Option to automatically focus the IDE window when a build fails/succeeds</li>
+            </ul>
+        </li>
     </ul>
     ]]></change-notes>
 

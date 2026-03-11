@@ -10,6 +10,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
 import com.intellij.openapi.wm.WindowManager
+import java.awt.Desktop
 
 internal class BuildSoundStartupActivity : ProjectActivity {
 
@@ -43,6 +44,9 @@ internal class BuildSoundStartupActivity : ProjectActivity {
                 isVisible = true
                 toFront()
                 requestFocus()
+            }
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.APP_REQUEST_FOREGROUND)) {
+                Desktop.getDesktop().requestForeground(false)
             }
         }
     }
